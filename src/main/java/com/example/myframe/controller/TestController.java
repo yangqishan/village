@@ -93,6 +93,7 @@ public class TestController {
     @Permission
     @ResponseBody
     public RestResponse findByname(){
+        System.out.print(11111);
         return new RestResponse(ResultEnum.SUCCESS,"有权限");
     }
 
