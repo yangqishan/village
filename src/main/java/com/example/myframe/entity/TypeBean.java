@@ -6,19 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 @Data
-@TableName("user")
-@NoArgsConstructor
+@TableName("type")
 @AllArgsConstructor
-public class UserBean extends DateBean {
+@NoArgsConstructor
+public class TypeBean extends DateBean {
+
     @TableId
     private int id;
-    private String name;
-    private int age;
-    private String sex;
     private String content;
-    private int typeId;//类型id
-    private String tel;
-    private String img;//用户头像
+
 }

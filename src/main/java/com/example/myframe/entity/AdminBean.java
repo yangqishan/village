@@ -6,21 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-
-@TableName("report")
 @Data
+@TableName("admin")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReportBean {
+public class AdminBean extends DateBean {
     @TableId
     private int id;
     private String name;
-    private String subject;
-    private String title;
-    private int paperId;
-    private int sum;//题目数量
-    private int achievement;//成绩
-    private Date addtime;//考试时间
-    private String ranswer;//试卷答案
+    private String password;
+    private String level;//管理员权限
+    private String img;
+    private String sex;
+    private int age;
+    private String address;
 }

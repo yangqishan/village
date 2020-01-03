@@ -3,25 +3,25 @@ package com.example.myframe.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.myframe.dao.BaseDao;
-import com.example.myframe.entity.ReportBean;
-import com.example.myframe.service.BaseService;
+import com.example.myframe.dao.CarDao;
+import com.example.myframe.entity.CarBean;
+import com.example.myframe.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BaseServiceImpl extends ServiceImpl<BaseDao,ReportBean> implements BaseService {
+public class CarServiceImpl extends ServiceImpl<CarDao,CarBean> implements CarService {
     @Autowired
-    private BaseDao baseDao;
+    private CarDao carDao;
     @Override
-    public List<ReportBean> get() {
-        return baseDao.getAll();
+    public List<CarBean> get() {
+        return carDao.getAll();
     }
 
     @Override
-    public IPage<ReportBean> getPage(Page<ReportBean> page) {
-        return baseDao.getPage(page);
+    public IPage<CarBean> getPage(Page<CarBean> page) {
+        return carDao.getPage(page);
     }
 }

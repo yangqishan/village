@@ -9,4 +9,5 @@ public interface UserService {
     List<UserBean> getAll();
 
     UserBean get(String name);
+
 }
