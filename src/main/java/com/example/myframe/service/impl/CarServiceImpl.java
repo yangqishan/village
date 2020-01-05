@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.myframe.dao.CarDao;
 import com.example.myframe.entity.CarBean;
 import com.example.myframe.service.CarService;
+import com.example.myframe.vo.CarVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,17 @@ public class CarServiceImpl extends ServiceImpl<CarDao,CarBean> implements CarSe
     }
 
     @Override
-    public IPage<CarBean> getPage(Page<CarBean> page) {
+    public IPage<CarVo> getPage(Page page) {
         return carDao.getPage(page);
+    }
+
+    @Override
+    public IPage<CarVo> getLike(Page page) {
+        return carDao.getLike(page);
+    }
+
+    @Override
+    public void updatebyuserId(CarBean carBean){
+        carDao.updatebyuserId(carBean);
     }
 }

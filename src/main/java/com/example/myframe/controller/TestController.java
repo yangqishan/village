@@ -1,13 +1,12 @@
 package com.example.myframe.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.myframe.aop.Permission;
 import com.example.myframe.common.consts.ResultEnum;
 import com.example.myframe.common.redis.RedisUtils;
 import com.example.myframe.common.response.RestResponse;
 import com.example.myframe.entity.UserBean;
 import com.example.myframe.service.UserService;
+import com.example.myframe.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-@Controller
+@RestController
 @Slf4j
 public class TestController {
 
     private static  final Logger logger= LoggerFactory.getLogger(TestController.class);
-    @Autowired
-    private BaseService baseService;
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -36,21 +35,11 @@ public class TestController {
         //request.getSession().setAttribute("list",list);
         request.setAttribute("current",1);
         request.setAttribute("size",5);
+
         return "index";
     }
-    @RequestMapping(value="/get")
-    @ResponseBody
-    public IPage<ReportBean> getPage(@RequestParam(value="current",defaultValue ="1") Integer current,
-                                     @RequestParam(value="size",defaultValue = "5") Integer size,
-                                     HttpServletRequest request){
-        Page<ReportBean> page=new Page<>(current,size);
-        IPage<ReportBean> iPage=baseService.getPage(page);
-        //String ss=redisUtils.get("s1").toString();
-        request.setAttribute("current",current);
-        request.setAttribute("size",size);
-        request.setAttribute("total",iPage.getTotal());
-        return iPage;
-    }
+
+
 
     @RequestMapping(value = "/login")
     public ModelAndView  login(HttpServletRequest request){
@@ -76,8 +65,8 @@ public class TestController {
                        @RequestParam(value="password") String pswd,
                        HttpServletRequest request){
 
-        UserBean userBean=userService.get(name);
-        if(pswd.equals(userBean.getPswd())){
+
+        if(true){
             request.getSession().setAttribute("name",name);
             //将用户的密码 账号存到缓存 定时60秒
             redisUtils.set(name,pswd,60);
@@ -90,7 +79,6 @@ public class TestController {
     @Permission
     @ResponseBody
     public RestResponse findByname(){
-        System.out.print(11111);
         return new RestResponse(ResultEnum.SUCCESS,"有权限");
     }
 

@@ -3,10 +3,36 @@
 <mapper namespace="com.example.myframe.dao.HouseDao">
 
     <select id="getAll" resultType="com.example.myframe.entity.HouseBean">
+     SELECT *FROM house where status='空楼'
+    </select>
+	<select id="getPage" resultType="com.example.myframe.vo.HouseVo" >
+     select
+        house.id as id,
+        house.position as position,
+        user.`name` as name,
+        type.content as type,
+        house.area as area,
+        house.`status` as status,
+        house.update_date as updateDate
+        FROM user,house,type where (user.id=house.user_id AND house.type_id=type.id)
+	</select>
+
+    <select id="getLike" resultType="com.example.myframe.vo.HouseVo">
+        select
+        house.id as id,
+        house.position as position,
+        user.`name` as name,
+        type.content as type,
+        house.area as area,
+        house.`status` as status,
+        house.update_date as updateDate
+        FROM user,house,type where (user.id=house.user_id AND house.type_id=type.id) and (type.content LIKE concat('%',#{selectStr},'%') or user.name like concat('%',#{selectStr},'%') or house.position  like concat('%',#{selectStr},'%'))
 
     </select>
-	<select id="getPage" resultType="com.example.myframe.entity.HouseBean" parameterType="String">
 
-	</select>
+    <update id="updatebyuserId" parameterType="com.example.myframe.entity.HouseBean">
+        update house SET status=#{status} where user_id=#{userId}
+    </update>
+
 </mapper>
 

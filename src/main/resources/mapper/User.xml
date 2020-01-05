@@ -3,13 +3,44 @@
 <mapper namespace="com.example.myframe.dao.UserDao">
 
     <select id="getAll" resultType="com.example.myframe.entity.UserBean">
-    SELECT
-    *
-    FROM
-	USER
+       SELECT * FROM USER
     </select>
-	<select id="get" resultType="com.example.myframe.entity.UserBean" parameterType="String">
-       SELECT pswd from user where name=#{name}
+	<select id="get" resultType="com.example.myframe.entity.UserBean" parameterType="com.example.myframe.entity.PageBean">
+       SELECT * from user where name like concat('%',#{selectStr},'%') or tel like concat('%',#{selectStr},'%')
 	</select>
+
+    <insert id="addUser" parameterType="com.example.myframe.entity.UserBean">
+        INSERT INTO USER(name,age,sex,content,create_date,update_date,type_id,tel,img,memo) VALUES(#{name},#{age},#{sex},#{content},now(),now(),#{typeId},#{tel},#{img},#{memo})
+    </insert>
+
+    <update id="updateUser" parameterType="com.example.myframe.entity.UserBean">
+        UPDATE USER set content=#{content},update_date=now(),type_id=#{typeId},tel=#{tel} where id=#{id}
+    </update>
+
+    <select id="getByname" parameterType="string" resultType="com.example.myframe.entity.UserBean">
+         SELECT *FROM USER where name=#{name}
+    </select>
+
+    <select id="getbyid" parameterType="integer" resultType="com.example.myframe.vo.UserVo">
+    select
+    user.id as id,
+    user.name as name,
+    user.age as age,
+    user.sex as sex,
+    user.tel as tel,
+    user.content as content,
+    user.img as img,
+    user.create_date as createDate,
+    user.update_date as updateDate,
+    type.content as level,
+    house.position as housePosition,
+    house.area as area,
+    house.`status` as houseStatus,
+    car.position as carPosition,
+    car.size as size,
+    car.`status` as carStatus
+
+    FROM user,house,car,type where (user.id=house.user_id AND user.id=car.user_id AND user.type_id=type.id and user.id=#{id})
+    </select>
 </mapper>
 

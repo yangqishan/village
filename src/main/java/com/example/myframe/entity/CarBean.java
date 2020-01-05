@@ -18,5 +18,5 @@ public class CarBean extends DateBean {
     private int typeId;//类型id
     private String status;//状态
     private String img;
-
+    private String position;
 }

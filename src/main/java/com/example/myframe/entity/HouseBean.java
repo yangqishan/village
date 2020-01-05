@@ -17,4 +17,5 @@ public class HouseBean extends DateBean{
     private int userId;//用户id
     private String area;//房屋面积
     private int typeId;//类型id
+    private String status;//状态
 }

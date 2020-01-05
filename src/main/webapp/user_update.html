@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            用户修改
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="./css/x-admin.css" media="all">
+        <script src="./js/vue.js"  type="text/javascript"></script>
+    </head>
+    
+    <body>
+    <div class="x-body">
+        <div id="app">
+        <blockquote class="layui-elem-quote">
+            <img src="images/0.jpg" class="layui-circle" style="width:50px;float:left">
+            <dl style="margin-left:80px; color:#019688">
+                <dt><span >{{user.name}}</span> <span ></span></dt>
+                <dd style="margin-left:0"></dd>
+            </dl>
+        </blockquote>
+
+        <div class="pd-20">
+            <table  class="layui-table" lay-skin="line">
+                <tbody>
+                <tr>
+                    <th>性别：</th>
+                    <td>{{user.sex}}</td>
+                    <th>年龄：</th>
+                    <td>{{user.age}}岁</td>
+                    <th>手机号码：</th>
+                    <td><input type="text" id="tel" v-bind:value="user.tel"/></td>
+                </tr>
+                <tr>
+                    <th>注册时间：</th>
+                    <td>{{user.createDate}}</td>
+                    <th>修改时间：</th>
+                    <td>{{user.updateDate}}</td>
+                    <th>等级：</th>
+                    <td>
+                        <select lay-verify="required" id="typeId" name="cid">
+                            <option value="1">
+                                {{user.level}}
+                            </option>
+                            <optgroup label="等级">
+                                <option value="1">等级一</option>
+                                <option value="2">等级二</option>
+                                <option value="3">等级三</option>
+                                <option value="4">等级四</option>
+                            </optgroup>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>楼房地址：</th>
+                    <td>{{user.housePosition}}</td>
+                    <th>面积：</th>
+                    <td>
+                       {{user.area}}
+                    </select>
+                    </td>
+                    <th>状态：</th>
+                    <td>
+                        <select lay-verify="required" id="houseStatus" name="cid">
+                            <option v-bind:value="user.houseStatus">
+                                {{user.houseStatus}}
+                            </option>
+                            <optgroup label="状态">
+                                <option value="首付">首付</option>
+                                <option value="付房贷">付房贷</option>
+                                <option value="预定">预定</option>
+                                <option value="正常">正常</option>
+                            </optgroup>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>车位地址：</th>
+                    <td>{{user.carPosition}}</td>
+                    <th>大小：</th>
+                    <td>
+                        {{user.size}}
+                    </td>
+                    <th>状态：</th>
+                    <td><select lay-verify="required" id="carStatus" name="cid">
+                        <option v-bind:value="user.carStatus">
+                            {{user.carStatus}}
+                        </option>
+                        <optgroup label="状态">
+                            <option value="预定">预定</option>
+                            <option value="已停车">已停车</option>
+                            <option value="未停车">未停车</option>
+                        </optgroup>
+                    </select></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label for="L_content" class="layui-form-label" style="top: -2px;">
+                <button class="layui-btn" lay-filter="add" lay-submit>
+                    保存
+                </button>
+            </label>
+            <div class="layui-input-block">
+                        <textarea id="L_content" name="content"
+                                  placeholder="请输入内容" style="height: 150px;width: 400px">{{user.content}}</textarea>
+            </div>
+        </div>
+       </div>
+    </div>
+
+        <script src="./lib/layui/layui.js" charset="utf-8">
+        </script>
+        <script src="./js/x-layui.js" charset="utf-8">
+        </script>
+        <script src="./js/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            layui.use(['form','layer','layedit'], function(){
+                $ = layui.jquery;
+              var form = layui.form()
+              ,layer = layui.layer
+              ,layedit = layui.layedit;
+
+
+                layedit.set({
+                  uploadImage: {
+                    url: "./upimg.json" //接口url
+                    ,type: 'post' //默认post
+                  }
+                })
+                var userId=getQueryString("userId")
+              //监听提交
+              form.on('submit(add)', function(data){
+                  var tel=$("#tel").val()
+                  var typeId=$("#typeId").val()
+                  var content=$('#L_content').val()
+                  var houseStatus=$("#houseStatus").val()
+                  var carStatus=$("#carStatus").val()
+                  $.ajax({
+                      url:"user/update",
+                      type:"post",
+                      dataType:"json",
+                      data:{
+                          id:userId,
+                          tel:tel,
+                          typeId:typeId,
+                          content:content,
+                          houseStatus:houseStatus,
+                          carStatus:carStatus
+                      },
+                      success:function (data) {
+
+                      }
+                  })
+                console.log(data);
+                //发异步，把数据提交给php
+                layer.alert("修改成功", {icon: 6},function () {
+                    // 获得frame索引
+                    var index = parent.layer.getFrameIndex(window.name);
+                    //关闭当前frame
+                    parent.layer.close(index);
+                });
+                return false;
+              });
+              
+              
+            });
+
+            var app=new Vue({
+                el:"#app",
+                data:{
+                    user:[]
+                }
+            })
+            //加载页面自动执行
+            $(document).ready(function(){
+                var userId=getQueryString("userId")
+                $.ajax({
+                    url:"user/getbyid",
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        id:userId.trim()
+                    },
+                    success:function (data) {
+
+                        app.user=data.data
+                    }
+                })
+
+            });
+            function getQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null)
+                    return decodeURI(r[2]);
+                return null;
+            }
+        </script>
+        <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+    </body>
+
+</html>

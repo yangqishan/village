@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.myframe.dao.HouseDao;
 import com.example.myframe.entity.HouseBean;
 import com.example.myframe.service.HouseService;
+import com.example.myframe.vo.HouseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +17,24 @@ public class HouseServiceImpl extends ServiceImpl<HouseDao,HouseBean> implements
 
     @Autowired
     private HouseDao houseDao;
+
     @Override
     public List<HouseBean> get() {
         return houseDao.getAll();
     }
 
     @Override
-    public IPage<HouseBean> getPage(Page<HouseBean> page) {
+    public IPage<HouseVo> getPage(Page page) {
         return houseDao.getPage(page);
+    }
+
+    @Override
+    public IPage<HouseVo> getLike(Page page) {
+        return houseDao.getLike(page);
+    }
+
+    @Override
+    public void updatebyuserId(HouseBean houseBean){
+        houseDao.updatebyuserId(houseBean);
     }
 }

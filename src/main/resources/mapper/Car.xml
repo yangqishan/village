@@ -3,10 +3,33 @@
 <mapper namespace="com.example.myframe.dao.CarDao">
 
     <select id="getAll" resultType="com.example.myframe.entity.CarBean">
+    SELECT *FROM car where status='空车位'
+    </select>
+	<select id="getPage" resultType="com.example.myframe.vo.CarVo">
+        select
+        car.id as id,
+        car.position as position,
+        user.`name` as name,
+        type.content as type,
+        car.size as size,
+        car.`status` as status,
+        car.update_date as updateDate
+        FROM user,car,type where (user.id=car.user_id AND car.type_id=type.id)
+	</select>
+    <select id="getLike" resultType="com.example.myframe.vo.CarVo">
+        select
+        car.id as id,
+        car.position as position,
+        user.`name` as name,
+        type.content as type,
+        car.size as size,
+        car.`status` as status,
+        car.update_date as updateDate
+        FROM user,car,type where (user.id=car.user_id AND car.type_id=type.id) and (type.content LIKE concat('%',#{selectStr},'%') or user.name like concat('%',#{selectStr},'%') or car.position  like concat('%',#{selectStr},'%'))
 
     </select>
-	<select id="getPage" resultType="com.example.myframe.entity.CarBean" parameterType="String">
-
-	</select>
+    <update id="updatebyuserId" parameterType="com.example.myframe.entity.CarBean">
+        update car SET status=#{status} where user_id=#{userId}
+    </update>
 </mapper>
 

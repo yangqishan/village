@@ -2,6 +2,7 @@ package com.example.myframe.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class DateBean {
@@ -10,31 +11,31 @@ public class DateBean {
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createDate;
+    private String createDate;
 
     /**
      * 更新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateDate;
+    private String updateDate;
     /**
      * 备注信息
      */
     private String memo;
 
-    public LocalDateTime getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
-    public LocalDateTime getUpdateDate() {
+    public String getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(LocalDateTime updateDate) {
+    public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
 

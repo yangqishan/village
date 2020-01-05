@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.myframe.entity.ChargeOrderBean;
 import com.example.myframe.entity.HouseBean;
 import com.example.myframe.entity.UserBean;
+import com.example.myframe.vo.HouseVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -17,5 +18,8 @@ public interface HouseDao extends BaseMapper<HouseBean> {
     List<HouseBean> getAll();
 
 
-    IPage<HouseBean> getPage(Page<HouseBean> page);
+    IPage<HouseVo> getPage(Page page);
+
+    IPage<HouseVo> getLike(Page page);
+    void updatebyuserId(HouseBean houseBean);
 }

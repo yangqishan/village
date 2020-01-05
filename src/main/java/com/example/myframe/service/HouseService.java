@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.myframe.entity.HouseBean;
+import com.example.myframe.vo.HouseVo;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface HouseService extends IService<HouseBean>{
      * @param page
      * @return
      */
-    IPage<HouseBean> getPage(Page<HouseBean> page);
+    IPage<HouseVo> getPage(Page page);
+    IPage<HouseVo> getLike(Page page);
+    void updatebyuserId(HouseBean houseBean);
 }
