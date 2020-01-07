@@ -16,8 +16,9 @@ import java.util.List;
 public class CarServiceImpl extends ServiceImpl<CarDao,CarBean> implements CarService {
     @Autowired
     private CarDao carDao;
+
     @Override
-    public List<CarBean> get() {
+    public List<CarVo> get() {
         return carDao.getAll();
     }
 
@@ -34,5 +35,10 @@ public class CarServiceImpl extends ServiceImpl<CarDao,CarBean> implements CarSe
     @Override
     public void updatebyuserId(CarBean carBean){
         carDao.updatebyuserId(carBean);
+    }
+
+    @Override
+    public List<CarVo> getNullLike(String str) {
+        return carDao.getNullLike(str);
     }
 }

@@ -36,7 +36,6 @@
             </div>
         </div>
         <xblock>
-            <button class="layui-btn" onclick="person_add('添加信息','user_add.html','600','500')"><i class="layui-icon"></i>空车位</button>
             <div id="app">
                 <table class="layui-table" >
                     <thead>
@@ -48,7 +47,7 @@
                             地址
                         </th>
                         <th>
-                            住户姓名
+                            用户姓名
                         </th>
                         <th>
                             类型
@@ -99,7 +98,7 @@
                         </td>
                         <td>{{h.updateDate}}</td>
                         <td class="td-manage">
-                            <a title="修改" href="javascript:;" onclick="home_edit('修改','home_edit.html','4','','510')"
+                            <a title="修改" href="javascript:;" onclick="edit(this)"
                                class="ml-5" style="text-decoration:none">
                                 <i class="layui-icon">&#xe642;</i>
                             </a>
@@ -141,15 +140,6 @@
         });
 
     });
-    /*添加*/
-    function person_add(title,url,w,h){
-        x_admin_show(title,url,w,h);
-    }
-    //查看
-    function person_look (obj,url,id,w,h) {
-        var userId=$(obj).parents("tr").children("td").eq(0).text();
-        x_admin_show("查看",url+'?userId='+userId,w,h);
-    }
 
     //定义一个vue对象
     var app=new Vue({
@@ -203,6 +193,24 @@
             }
         }
     });
+
+    //编辑车位的状态
+    function edit(obj) {
+        var id=$(obj).parents("tr").children("td").eq(0).text()
+        var status=$(obj).parents("tr").children("td").find("select").val()
+        $.ajax({
+            url:"car/editStatus",
+            type:"post",
+            dataType:"json",
+            data:{
+                id:id,
+                status:status
+            },
+            success:function (data) {
+                layer.msg("修改成功", {icon: 6,time:1500})
+            }
+        })
+    }
     //加载页面自动执行
     $(document).ready(function(){
         $.ajax({
@@ -213,6 +221,7 @@
 
             },
             success:function (data) {
+                console.log(data.data.records)
                 //给表格嵌入数值
                 app.car=data.data.records;
             }
@@ -224,7 +233,7 @@
     $("button").click(function(){
         var name=$("#search").val();
         $.ajax({
-            url:"house/getPage",//调用的接口 模糊查询
+            url:"car/getPage",//调用的接口 模糊查询
             type:"post",
             dataType:"json",
             data:{

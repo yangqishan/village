@@ -19,7 +19,7 @@ public class HouseServiceImpl extends ServiceImpl<HouseDao,HouseBean> implements
     private HouseDao houseDao;
 
     @Override
-    public List<HouseBean> get() {
+    public List<HouseVo> get() {
         return houseDao.getAll();
     }
 
@@ -36,5 +36,10 @@ public class HouseServiceImpl extends ServiceImpl<HouseDao,HouseBean> implements
     @Override
     public void updatebyuserId(HouseBean houseBean){
         houseDao.updatebyuserId(houseBean);
+    }
+
+    @Override
+    public List<HouseVo> getNullLike(String str) {
+        return houseDao.getNullLike(str);
     }
 }

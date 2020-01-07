@@ -24,7 +24,7 @@ public class CarController {
 
     @RequestMapping(value="/getAll")
     public RestResponse getAll(){
-        List<CarBean> list=carService.get();
+        List<CarVo> list=carService.get();
         return new RestResponse(ResultEnum.SUCCESS,list);
     }
 
@@ -48,5 +48,34 @@ public class CarController {
             list=carService.getPage(page);
         }
         return new RestResponse(ResultEnum.SUCCESS,list);
+    }
+
+    /**
+     * 空车位模糊查询
+     * @param str
+     * @return
+     */
+    @RequestMapping(value="/getNullLike")
+    public RestResponse getNullLike(@RequestParam(value="str") String str){
+        List<CarVo> list=carService.getNullLike(str);
+        return new RestResponse(ResultEnum.SUCCESS,list);
+    }
+
+    /**
+     * 修改车位的状态
+     * @param id
+     * @param status
+     * @return
+     */
+    @RequestMapping("/editStatus")
+    public RestResponse editStatus(@RequestParam(value="id") int id,
+                                   @RequestParam(value="status") String status){
+
+        CarBean carBean=new CarBean();
+        carBean=carService.getById(id);
+        carBean.setStatus(status);
+        //修改状态
+        carService.updateById(carBean);
+        return new RestResponse(ResultEnum.SUCCESS);
     }
 }

@@ -27,7 +27,7 @@ public class HouseController {
      */
     @RequestMapping(value="/getAll")
     public RestResponse getAll(){
-        List<HouseBean> list=houseService.get();
+        List<HouseVo> list=houseService.get();
         return new RestResponse(ResultEnum.SUCCESS,list);
     }
 
@@ -51,5 +51,33 @@ public class HouseController {
             list=houseService.getPage(page);
         }
         return new RestResponse(ResultEnum.SUCCESS,list);
+    }
+
+    /**
+     * 空楼模糊查询
+     * @param str
+     * @return
+     */
+    @RequestMapping(value="/getNullLike")
+    public RestResponse getNullLike(@RequestParam(value="str") String str){
+        List<HouseVo> list=houseService.getNullLike(str);
+        return new RestResponse(ResultEnum.SUCCESS,list);
+    }
+
+    /**
+     * 修改楼房的状态
+     * @param id
+     * @param status
+     * @return
+     */
+    @RequestMapping("/editStatus")
+    public RestResponse editStatus(@RequestParam(value="id") int id,
+                                   @RequestParam(value="status") String status){
+        HouseBean houseBean=new HouseBean();
+        houseBean=houseService.getById(id);
+        houseBean.setStatus(status);
+        //修改状态
+        houseService.updateById(houseBean);
+        return new RestResponse(ResultEnum.SUCCESS);
     }
 }

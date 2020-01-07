@@ -2,8 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.myframe.dao.HouseDao">
 
-    <select id="getAll" resultType="com.example.myframe.entity.HouseBean">
-     SELECT *FROM house where status='空楼'
+    <select id="getAll" resultType="com.example.myframe.vo.HouseVo">
+      SELECT   house.id as id,
+        house.position as position,
+        type.content as type,
+        house.area as area,
+        house.`status` as status,
+        house.update_date as updateDate
+        FROM house,type where house.status='空楼' and house.type_id=type.id
     </select>
 	<select id="getPage" resultType="com.example.myframe.vo.HouseVo" >
      select
@@ -30,9 +36,19 @@
 
     </select>
 
+    <select id="getNullLike" resultType="com.example.myframe.vo.HouseVo">
+        select
+        house.id as id,
+        house.position as position,
+        type.content as type,
+        house.area as area,
+        house.`status` as status,
+        house.update_date as updateDate
+        FROM house,type where ( house.type_id=type.id) and house.status='空楼' and (type.content LIKE concat('%',#{selectStr},'%')  or house.position  like concat('%',#{selectStr},'%'))
+
+    </select>
     <update id="updatebyuserId" parameterType="com.example.myframe.entity.HouseBean">
         update house SET status=#{status} where user_id=#{userId}
     </update>
-
 </mapper>
 

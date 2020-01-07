@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        楼房管理
+        停车位管理
     </title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -18,7 +18,7 @@
     <div class="x-nav">
             <span class="layui-breadcrumb">
               <a><cite>首页</cite></a>
-              <a><cite>楼房管理</cite></a>
+              <a><cite>停车位管理</cite></a>
             </span>
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
@@ -27,7 +27,7 @@
             <div class="layui-form-pane">
                 <div class="layui-form-item">
                     <div class="layui-input-inline" style="width:400px">
-                        <input type="text" name="username"  id="search" placeholder="搜索内容(楼房位置，姓名，类型)" autocomplete="off" class="layui-input">
+                        <input type="text" name="username"  id="search" placeholder="搜索内容(车库位置,类型)" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline" style="width:80px">
                         <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -47,13 +47,10 @@
                             地址
                         </th>
                         <th>
-                            住户姓名
-                        </th>
-                        <th>
                             类型
                         </th>
                         <th>
-                            面积
+                            大小
                         </th>
                         <th>
                             状态
@@ -61,59 +58,29 @@
                         <th>
                             修改时间
                         </th>
-                        <th>
-                            操作
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="h of house">
+                    <tr v-for="h of car">
                         <td>
                             {{h.id}}
                         </td>
                         <td>
                             {{h.position}}
                         </td>
-
-                        <td >
-                            {{h.name}}
-                        </td>
                         <td >
                             {{h.type}}
                         </td>
                         <td >
-                            {{h.area}}
+                            {{h.size}}
                         </td>
                         <td >
-                                <select lay-verify="required" id="houseStatus" name="cid">
-                                <option v-bind:value="h.status">
-                                    {{h.status}}
-                                </option>
-                                <optgroup label="状态">
-                                    <option value="首付">首付</option>
-                                    <option value="付房贷">付房贷</option>
-                                    <option value="预定">预定</option>
-                                    <option value="正常">正常</option>
-                                </optgroup>
-                            </select>
+                            {{h.status}}
                         </td>
                         <td>{{h.updateDate}}</td>
-                        <td class="td-manage">
-                            <a title="修改" href="javascript:;" onclick="edit(this)"
-                               class="ml-5" style="text-decoration:none">
-                                <i class="layui-icon">&#xe642;</i>
-                            </a>
-
-                        </td>
                     </tr>
                     </tbody>
                 </table>
-                <!--分页-->
-
-                <ul class="pagination">
-                    <a href="#" v-on:click="page1" >上一页</a>
-                    <a href="#" v-on:click="page2">下一页</a>
-                </ul>
             </div>
         </xblock>
     </div>
@@ -142,79 +109,18 @@
         });
 
     });
-
     //定义一个vue对象
     var app=new Vue({
         el:"#app",
         data:{
             pageindex:0,
-            house:[]
-        },
-        methods:{
-            //分页查询
-            page1:function () {
-                var name=$("#search").val();
-                this.pageindex--;
-                if(this.pageindex<=0){
-                    this.pageindex=0
-                }
-                $.ajax({
-                    url:"house/getPage",
-                    type:"post",
-                    dataType:"json",
-                    data:{
-                        name:name,
-                        current:this.pageindex
-                    },
-                    success:function (data) {
-
-                        //给表格嵌入数值
-                        app.pageindex=data.data.current;
-                        app.house=data.data.records;
-                    }
-                })
-            },
-            page2:function () {
-                var name=$("#search").val();
-                this.pageindex++;
-                $.ajax({
-                    url:"house/getPage",
-                    type:"post",
-                    dataType:"json",
-                    data:{
-                        name:name,
-                        current:this.pageindex
-                    },
-                    success:function (data) {
-                        //给表格嵌入数值
-                        app.pageindex=data.data.current;
-                        app.house=data.data.records;
-                    }
-                })
-            }
+            car:[]
         }
     });
-    //编辑楼房的状态
-    function edit(obj) {
-        var id=$(obj).parents("tr").children("td").eq(0).text()
-        var status=$(obj).parents("tr").children("td").find("select").val()
-        $.ajax({
-            url:"house/editStatus",
-            type:"post",
-            dataType:"json",
-            data:{
-                id:id,
-                status:status
-            },
-            success:function (data) {
-               layer.msg("修改成功", {icon: 6,time:1500})
-            }
-        })
-    }
     //加载页面自动执行
     $(document).ready(function(){
         $.ajax({
-            url:"house/getPage",//调用的接口  全局查询
+            url:"car/getAll",//调用的接口  全局查询
             type:"post",
             dataType:"json",
             data:{
@@ -222,7 +128,7 @@
             },
             success:function (data) {
                 //给表格嵌入数值
-                app.house=data.data.records;
+                app.car=data.data;
             }
 
         });
@@ -232,16 +138,16 @@
     $("button").click(function(){
         var name=$("#search").val();
         $.ajax({
-            url:"house/getPage",//调用的接口 模糊查询
+            url:"car/getNullLike",//调用的接口 模糊查询
             type:"post",
             dataType:"json",
             data:{
-                name:name
+                str:name
             },
             success:function (data) {
-                console.log(data.data.records)
+                console.log(data.data)
                 //给表格嵌入数值
-                app.house=data.data.records;
+                app.car=data.data;
 
             }
 

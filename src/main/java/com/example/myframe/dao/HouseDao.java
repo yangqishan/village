@@ -15,11 +15,16 @@ import java.util.List;
 @Mapper
 @Component
 public interface HouseDao extends BaseMapper<HouseBean> {
-    List<HouseBean> getAll();
+    List<HouseVo> getAll();
 
 
     IPage<HouseVo> getPage(Page page);
 
     IPage<HouseVo> getLike(Page page);
     void updatebyuserId(HouseBean houseBean);
+    /**
+     *  空楼模糊查
+     */
+    List<HouseVo> getNullLike(String str);
+
 }

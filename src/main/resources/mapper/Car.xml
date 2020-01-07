@@ -2,8 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.myframe.dao.CarDao">
 
-    <select id="getAll" resultType="com.example.myframe.entity.CarBean">
-    SELECT *FROM car where status='空车位'
+    <select id="getAll" resultType="com.example.myframe.vo.CarVo">
+    SELECT   car.id as id,
+        car.position as position,
+        type.content as type,
+        car.size as size,
+        car.`status` as status,
+        car.update_date as updateDate
+        FROM car,type where car.status='空车位' and car.type_id=type.id
     </select>
 	<select id="getPage" resultType="com.example.myframe.vo.CarVo">
         select
@@ -28,6 +34,19 @@
         FROM user,car,type where (user.id=car.user_id AND car.type_id=type.id) and (type.content LIKE concat('%',#{selectStr},'%') or user.name like concat('%',#{selectStr},'%') or car.position  like concat('%',#{selectStr},'%'))
 
     </select>
+
+    <select id="getNullLike" resultType="com.example.myframe.vo.CarVo">
+        select
+        car.id as id,
+        car.position as position,
+        type.content as type,
+        car.size as size,
+        car.`status` as status,
+        car.update_date as updateDate
+        FROM car,type where ( car.type_id=type.id) and car.status='空车位' and (type.content LIKE concat('%',#{selectStr},'%')  or car.position  like concat('%',#{selectStr},'%'))
+
+    </select>
+
     <update id="updatebyuserId" parameterType="com.example.myframe.entity.CarBean">
         update car SET status=#{status} where user_id=#{userId}
     </update>

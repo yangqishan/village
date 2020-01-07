@@ -15,8 +15,9 @@ import java.util.List;
 @Mapper
 @Component
 public interface CarDao extends BaseMapper<CarBean> {
-    List<CarBean> getAll();
+    List<CarVo> getAll();
 
+    List<CarVo> getNullLike(String str);
 
     IPage<CarVo> getPage(Page page);
 

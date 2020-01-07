@@ -10,7 +10,7 @@ import com.example.myframe.vo.HouseVo;
 import java.util.List;
 
 public interface CarService extends IService<CarBean>{
-    List<CarBean> get();
+    List<CarVo> get();
 
     /**
      * 分页查询
@@ -21,4 +21,6 @@ public interface CarService extends IService<CarBean>{
     IPage<CarVo> getLike(Page page);
 
     void updatebyuserId(CarBean carBean);
+
+    List<CarVo> getNullLike(String str);
 }
