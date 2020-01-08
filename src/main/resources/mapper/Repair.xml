@@ -18,5 +18,29 @@
     from repair,type where  (repair.type_id=type.id ) and (repair.name like concat('%',#{selectStr},'%')  or repair.tel like concat('%',#{selectStr},'%') or type.content like concat('%',#{selectStr},'%'))
 
 	</select>
+
+    <insert id="addRepair" parameterType="com.example.myframe.entity.RepairBean">
+        INSERT INTO repair(name,age,sex,create_date,update_date,type_id,tel,address) VALUES(#{name},#{age},#{sex},now(),now(),#{typeId},#{tel},#{address})
+    </insert>
+
+    <select id="getbyid" resultType="com.example.myframe.vo.RepairVO" parameterType="integer">
+      SELECT
+    repair.id as id,
+    repair.name as name,
+    repair.age as age,
+    repair.sex as sex,
+    repair.tel as tel,
+    repair.address as address,
+    type.content as type,
+    type.id as typeId,
+    repair.create_date as createDate,
+    repair.update_date as updateDate,
+    repair.memo as content
+    from repair,type where  (repair.type_id=type.id ) and  repair.id=#{id}
+    </select>
+
+    <update id="updateRepair" parameterType="com.example.myframe.entity.RepairBean">
+        UPDATE repair set address=#{address},memo=#{memo},update_date=now(),type_id=#{typeId},tel=#{tel} where id=#{id}
+    </update>
 </mapper>
 

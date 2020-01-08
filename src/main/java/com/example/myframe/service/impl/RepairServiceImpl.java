@@ -26,4 +26,19 @@ public class RepairServiceImpl extends ServiceImpl<RepairDao,RepairBean> impleme
     public IPage<RepairVO> getPage(Page page) {
         return repairDao.getPage(page);
     }
+
+    @Override
+    public void addRepair(RepairBean repairBean) {
+        repairDao.addRepair(repairBean);
+    }
+
+    @Override
+    public RepairVO getbyid(int id) {
+        return repairDao.getbyid(id);
+    }
+
+    @Override
+    public void updateRepair(RepairBean repairBean) {
+        repairDao.updateRepair(repairBean);
+    }
 }

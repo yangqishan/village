@@ -3,9 +3,11 @@
 <mapper namespace="com.example.myframe.dao.TypeDao">
 
     <select id="getAll" resultType="com.example.myframe.entity.TypeBean">
-  
+    select * from type where memo='修理工'
     </select>
 	<select id="getPage" resultType="com.example.myframe.entity.TypeBean" parameterType="String">
 	</select>
+
+
 </mapper>
 

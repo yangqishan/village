@@ -36,7 +36,7 @@
                 </div> 
             </div>
           <xblock>
-          <button class="layui-btn" onclick="person_add('添加信息','user_add.html','600','500')"><i class="layui-icon">&#xe608;</i>添加</button>
+          <button class="layui-btn" onclick="person_add('添加信息','repair_add.html','600','500')"><i class="layui-icon">&#xe608;</i>添加</button>
 
             <div id="app">
             <table class="layui-table" >
@@ -90,7 +90,7 @@
                         </td>
                         <td>{{repair.createDate}}</td>
                         <td class="td-manage">
-                            <a title="查看" href="javascript:;" onclick="person_look(this,'user_update.html','4','','510')"
+                            <a title="查看" href="javascript:;" onclick="person_look(this,'repair_update.html','4','','510')"
                             class="ml-5" style="text-decoration:none">
                                 <i class="layui-icon"><img src="images/look.png" width="15" height="15"></img></i>
                             </a>
@@ -136,8 +136,8 @@
             }
             //查看
            function person_look (obj,url,id,w,h) {
-                var userId=$(obj).parents("tr").children("td").eq(0).text();
-                x_admin_show("查看",url+'?userId='+userId,w,h);
+                var repairId=$(obj).parents("tr").children("td").eq(0).text();
+                x_admin_show("查看",url+'?repairId='+repairId,w,h);
             }
 
             //定义一个vue对象

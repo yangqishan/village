@@ -16,6 +16,7 @@ public class TypeServiceImpl extends ServiceImpl<TypeDao,TypeBean> implements Ty
 
     @Autowired
     private TypeDao typeDao;
+
     @Override
     public List<TypeBean> get() {
         return typeDao.getAll();

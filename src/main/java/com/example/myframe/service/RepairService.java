@@ -17,4 +17,11 @@ public interface RepairService extends IService<RepairBean>{
      * @return
      */
     IPage<RepairVO> getPage(Page page);
+
+    //增加维修工
+    void addRepair(RepairBean repairBean);
+
+    RepairVO getbyid(int id);
+
+    void updateRepair(RepairBean repairBean);
 }

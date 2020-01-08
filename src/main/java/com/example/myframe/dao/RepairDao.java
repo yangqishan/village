@@ -16,4 +16,11 @@ public interface RepairDao extends BaseMapper<RepairBean> {
     List<RepairBean> getAll();
 
     IPage<RepairVO> getPage(Page page);
+
+    //增加维修工
+    void addRepair(RepairBean repairBean);
+
+    RepairVO getbyid(int id);
+    //修改维修工的信息
+    void updateRepair(RepairBean repairBean);
 }

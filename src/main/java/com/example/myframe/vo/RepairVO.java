@@ -15,4 +15,6 @@ public class RepairVO extends DateBean {
     private String address;
     private String tel;
     private String type;//维修员类型
+    private String typeId;//类型id
+    private String content;
 }
