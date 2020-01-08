@@ -69,26 +69,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="user of users">
+                    <tr v-for="repair of repairs">
                         <td>
-                            {{user.id}}
-                        </td>
-                        <td>
-                            {{user.name}}
-                        </td>
-                        <td >
-                            {{user.age}}岁
-                        </td>
-                        <td >
-                            {{user.sex}}
-                        </td>
-                        <td >
-                            {{user.typeId}}
+                            {{repair.id}}
                         </td>
                         <td>
-                            {{user.tel}}
+                            {{repair.name}}
                         </td>
-                        <td>{{user.createDate}}</td>
+                        <td >
+                            {{repair.age}}岁
+                        </td>
+                        <td >
+                            {{repair.sex}}
+                        </td>
+                        <td >
+                            {{repair.type}}
+                        </td>
+                        <td>
+                            {{repair.tel}}
+                        </td>
+                        <td>{{repair.createDate}}</td>
                         <td class="td-manage">
                             <a title="查看" href="javascript:;" onclick="person_look(this,'user_update.html','4','','510')"
                             class="ml-5" style="text-decoration:none">
@@ -145,7 +145,7 @@
                 el:"#app",
                 data:{
                     pageindex:0,
-                    users:[]
+                    repairs:[]
                 },
                 methods:{
                     //分页查询
@@ -156,7 +156,7 @@
                          this.pageindex=0
                      }
                      $.ajax({
-                         url:"user/get",
+                         url:"repair/getPage",
                          type:"post",
                          dataType:"json",
                          data:{
@@ -166,7 +166,7 @@
                          success:function (data) {
                              //给表格嵌入数值
                              app.pageindex=data.data.current;
-                             app.users=data.data.records;
+                             app.repairs=data.data.records;
                          }
                      })
                  },
@@ -174,7 +174,7 @@
                         var name=$("#search").val();
                         this.pageindex++;
                         $.ajax({
-                            url:"user/get",
+                            url:"repair/getPage",
                             type:"post",
                             dataType:"json",
                             data:{
@@ -184,7 +184,7 @@
                             success:function (data) {
                                 //给表格嵌入数值
                                 app.pageindex=data.data.current;
-                                app.users=data.data.records;
+                                app.repairs=data.data.records;
                             }
                         })
                     }
@@ -193,15 +193,16 @@
             //加载页面自动执行
             $(document).ready(function(){
                 $.ajax({
-                    url:"user/getAll",//调用的接口  全局查询
+                    url:"repair/getPage",//调用的接口  全局查询
                     type:"post",
                     dataType:"json",
                     data:{
-
+                        name:"",
                     },
                     success:function (data) {
+                        console.log(data.data.records)
                         //给表格嵌入数值
-                        app.users=data.data.records;
+                        app.repairs=data.data.records;
                     }
 
                 });
@@ -211,7 +212,7 @@
             $("button").click(function(){
                 var name=$("#search").val();
                 $.ajax({
-                    url:"user/get",//调用的接口 模糊查询
+                    url:"repair/getPage",//调用的接口 模糊查询
                     type:"post",
                     dataType:"json",
                     data:{
@@ -219,7 +220,7 @@
                     },
                     success:function (data) {
                         //给表格嵌入数值
-                        app.users=data.data.records;
+                        app.repairs=data.data.records;
 
                     }
 

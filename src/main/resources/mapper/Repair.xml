@@ -5,7 +5,17 @@
     <select id="getAll" resultType="com.example.myframe.entity.RepairBean">
 
     </select>
-	<select id="getPage" resultType="com.example.myframe.entity.RepairBean" parameterType="String">
+	<select id="getPage" resultType="com.example.myframe.vo.RepairVO">
+	 SELECT
+    repair.id as id,
+    repair.name as name,
+    repair.age as age,
+    repair.sex as sex,
+    repair.tel as tel,
+    repair.address as address,
+    type.content as type,
+    repair.create_date as createDate
+    from repair,type where  (repair.type_id=type.id ) and (repair.name like concat('%',#{selectStr},'%')  or repair.tel like concat('%',#{selectStr},'%') or type.content like concat('%',#{selectStr},'%'))
 
 	</select>
 </mapper>

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.myframe.entity.RepairBean;
+import com.example.myframe.vo.RepairVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -14,5 +15,5 @@ import java.util.List;
 public interface RepairDao extends BaseMapper<RepairBean> {
     List<RepairBean> getAll();
 
-    IPage<RepairBean> getPage(Page<RepairBean> page);
+    IPage<RepairVO> getPage(Page page);
 }

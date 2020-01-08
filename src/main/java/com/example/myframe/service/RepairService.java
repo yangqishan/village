@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.myframe.entity.RepairBean;
+import com.example.myframe.vo.RepairVO;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface RepairService extends IService<RepairBean>{
      * @param page
      * @return
      */
-    IPage<RepairBean> getPage(Page<RepairBean> page);
+    IPage<RepairVO> getPage(Page page);
 }
