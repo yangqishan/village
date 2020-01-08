@@ -16,7 +16,7 @@ import java.util.List;
 public interface TypeDao extends BaseMapper<TypeBean> {
     List<TypeBean> getAll();
 
-    IPage<TypeBean> getPage(Page<TypeBean> page);
+    IPage<TypeBean> getPage(Page page);
 
-
+    void addType(TypeBean typeBean);
 }

@@ -23,7 +23,12 @@ public class TypeServiceImpl extends ServiceImpl<TypeDao,TypeBean> implements Ty
     }
 
     @Override
-    public IPage<TypeBean> getPage(Page<TypeBean> page) {
+    public IPage<TypeBean> getPage(Page page) {
         return typeDao.getPage(page);
+    }
+
+    @Override
+    public void addType(TypeBean typeBean) {
+        typeDao.addType(typeBean);
     }
 }

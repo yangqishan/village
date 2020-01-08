@@ -15,5 +15,6 @@ public interface TypeService extends IService<TypeBean>{
      * @param page
      * @return
      */
-    IPage<TypeBean> getPage(Page<TypeBean> page);
+    IPage<TypeBean> getPage(Page page);
+    void addType(TypeBean typeBean);
 }
