@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.myframe.entity.NoticeBean;
+import com.example.myframe.vo.NoticeVo;
 
 import java.util.List;
 
@@ -15,5 +16,10 @@ public interface NoticeService extends IService<NoticeBean>{
      * @param page
      * @return
      */
-    IPage<NoticeBean> getPage(Page<NoticeBean> page);
+    IPage<NoticeVo> getPage(Page page);
+
+
+    void edit(NoticeBean noticeBean);
+
+    void add(NoticeBean noticeBean);
 }

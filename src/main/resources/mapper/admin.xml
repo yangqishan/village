@@ -3,7 +3,7 @@
 <mapper namespace="com.example.myframe.dao.AdminDao">
 
     <select id="getAll" resultType="com.example.myframe.entity.AdminBean">
-
+    SELECT * from admin
     </select>
 	<select id="get" resultType="com.example.myframe.entity.AdminBean" parameterType="String">
 

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.myframe.dao.NoticeDao;
 import com.example.myframe.entity.NoticeBean;
 import com.example.myframe.service.NoticeService;
+import com.example.myframe.vo.NoticeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,19 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeDao,NoticeBean> impleme
     }
 
     @Override
-    public IPage<NoticeBean> getPage(Page<NoticeBean> page) {
+    public IPage<NoticeVo> getPage(Page page) {
         return noticeDao.getPage(page);
     }
 
+    @Override
+    public void edit(NoticeBean noticeBean) {
+        noticeDao.edit(noticeBean);
+    }
+
+    @Override
+    public void add(NoticeBean noticeBean) {
+        noticeDao.add(noticeBean);
+    }
 
 
 }

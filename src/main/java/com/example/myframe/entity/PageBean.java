@@ -14,6 +14,7 @@ public class PageBean<T> extends Page<T> {
     private Integer selectInt;
     private String selectStr;
 
+    private String selectName;
     public PageBean(long current, long size) {
         super(current, size);
     }

@@ -5,8 +5,24 @@
     <select id="getAll" resultType="com.example.myframe.entity.NoticeBean">
 
     </select>
-	<select id="getPage" resultType="com.example.myframe.entity.NoticeBean" parameterType="String">
-
+	<select id="getPage" resultType="com.example.myframe.vo.NoticeVo">
+     SELECT
+    notice.id as id,
+    notice.title as title,
+    notice.content as content,
+    notice.create_date as createDate,
+    notice.update_date as updateDate,
+    admin.id as adminId,
+    admin.name as adminName
+    from notice,admin where (notice.admin_id=admin.id) and (admin.name like concat('%',#{selectStr},'%') or  notice.title like concat('%',#{selectStr},'%') or notice.content like concat('%',#{selectStr},'%'))
 	</select>
+
+    <update id="edit" parameterType="com.example.myframe.entity.NoticeBean">
+        update notice set title=#{title},content=#{content},update_date=now() where id=#{id}
+    </update>
+
+    <insert id="add" parameterType="com.example.myframe.entity.NoticeBean">
+        insert into notice(title,content,admin_id,create_date,update_date) VALUES (#{title},#{content},#{adminId},now(),now())
+    </insert>
 </mapper>
 
