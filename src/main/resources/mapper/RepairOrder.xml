@@ -5,8 +5,32 @@
     <select id="getAll" resultType="com.example.myframe.entity.RepairOrderBean">
 
     </select>
-	<select id="getPage" resultType="com.example.myframe.entity.RepairOrderBean" parameterType="String">
-
+	<select id="getPage" resultType="com.example.myframe.vo.RepairOrderVo">
+    SELECT
+    repairorder.id as id,
+    repairorder.title as title,
+    repair.name as repairName,
+    user.name as userName,
+    house.position as housePosition,
+    type.content as type,
+    repairorder.status as status,
+    repairorder.create_date as createDate
+    from repairorder,user,house,type,repair
+    where repairorder.user_id=user.id
+    and (repairorder.repair_id=repair.id
+    and repairorder.house_id=house.id
+    and repairorder.type_id=type.id)
+    and (repairorder.title like concat('%',#{selectStr},'%')
+    or repair.name like concat('%',#{selectStr},'%')
+    or user.name like concat('%',#{selectStr},'%')
+    or house.position like concat('%',#{selectStr},'%')
+    or type.content like concat('%',#{selectStr},'%')
+    or repairorder.status like concat('%',#{selectStr},'%'))
+    ORDER BY repairorder.update_date desc
 	</select>
+
+    <update id="editStatus" parameterType="com.example.myframe.entity.RepairOrderBean">
+      update  repairorder set status=#{status} where id=#{id}
+    </update>
 </mapper>
 

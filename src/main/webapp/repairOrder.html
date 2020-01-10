@@ -24,20 +24,20 @@
             </span>
             <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
         </div>
-        <div class="x-body">
-        <form class="layui-form x-center" action="" style="width:500px">
+        <div class="x-body" id="app">
+        <div class="layui-form x-center" style="width:500px">
                 <div class="layui-form-pane">
                   <div class="layui-form-item">
                     <div class="layui-input-inline" style="width:400px">
-                      <input type="text" name="username"  placeholder="搜索内容" autocomplete="off" class="layui-input">
+                      <input type="text" id="search"  placeholder="搜索内容" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline" style="width:80px">
                         <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
                     </div>
                   </div>
                 </div> 
-            </form>
-            <table class="layui-table">
+            </div>
+            <table class="layui-table" >
                 <thead>
                     <tr>
                         <th width="5%">序号</th>
@@ -59,10 +59,19 @@
                         <td>{{repairOrder.userName}}</td>
                         <td>{{repairOrder.housePosition}}</td>
                         <td>{{repairOrder.type}}</td>
-                        <td>{{repairOrder.status}</td>
-                        <td>{{repairOrder.createDate}</td>
+                        <td>
+                            <select lay-verify="required" id="status" name="cid">
+                                <option value="status">
+                                    {{repairOrder.status}}
+                                </option>
+                                <optgroup label="状态">
+                                    <option value="未维修">未维修</option>
+                                    <option value="已维修">已维修</option>
+                                </optgroup>
+                            </select></td>
+                        <td>{{repairOrder.createDate}}</td>
                         <td class="td-manage">
-                            <a title="修改" href="javascript:;" onclick="new_edit('修改','new_edit.html','4','','510')"
+                            <a title="修改" href="javascript:;" onclick="edit(this)"
                             class="ml-5" style="text-decoration:none">
                                 <i class="layui-icon">&#xe642;</i>
                             </a>
@@ -71,7 +80,6 @@
                 </tbody>
             </table>
             <!--分页-->
-
             <ul class="pagination">
                 <a href="#" v-on:click="page1" >上一页</a>
                 <a href="#" v-on:click="page2">下一页</a>
@@ -108,49 +116,107 @@
               
             });
 
-            //批量删除提交
-             function delAll () {
-                layer.confirm('确认要删除吗？',function(index){
-                    //捉到所有被选中的，发异步进行删除
-                    layer.msg('删除成功', {icon: 1});
-                });
-             }
-             /*添加*/
-            function new_add(title,url,w,h){
-                x_admin_show(title,url,w,h);
-            }
-             /*停用*/
-            function banner_stop(obj,id){
-                layer.confirm('确认不显示吗？',function(index){
-                    //发异步把用户状态进行更改
-                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="banner_start(this,id)" href="javascript:;" title="显示"><i class="layui-icon">&#xe62f;</i></a>');
-                    $(obj).parents("tr").find(".td-status").html('<span class="layui-btn layui-btn-disabled layui-btn-mini">不显示</span>');
-                    $(obj).remove();
-                    layer.msg('不显示!',{icon: 5,time:1000});
-                });
-            }
+            //定义一个vue对象
+            var app=new Vue({
+                el:"#app",
+                data:{
+                    pageindex:0,
+                    repairOrders:[]
+                },
+                methods:{
+                    //分页查询
+                    page1:function () {
+                        var name=$("#search").val();
+                        this.pageindex--;
+                        if(this.pageindex<=0){
+                            this.pageindex=0
+                        }
+                        $.ajax({
+                            url:"repairOrder/getPage",
+                            type:"post",
+                            dataType:"json",
+                            data:{
+                                name:name,
+                                current:this.pageindex
+                            },
+                            success:function (data) {
+                                //给表格嵌入数值
+                                app.pageindex=data.data.current;
+                                app.repairOrders=data.data.records;
+                            }
+                        })
+                    },
+                    page2:function () {
+                        var name=$("#search").val();
+                        this.pageindex++;
+                        $.ajax({
+                            url:"repairOrder/getPage",
+                            type:"post",
+                            dataType:"json",
+                            data:{
+                                name:name,
+                                current:this.pageindex
+                            },
+                            success:function (data) {
+                                //给表格嵌入数值
+                                app.pageindex=data.data.current;
+                                app.repairOrders=data.data.records;
+                            }
+                        })
+                    }
+                }
+            });
+            //加载页面自动执行
+            $(document).ready(function(){
+                $.ajax({
+                    url:"repairOrder/getPage",//调用的接口  全局查询
+                    type:"post",
+                    dataType:"json",
+                    data:{
 
-            /*启用*/
-            function banner_start(obj,id){
-                layer.confirm('确认要显示吗？',function(index){
-                    //发异步把用户状态进行更改
-                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="banner_stop(this,id)" href="javascript:;" title="不显示"><i class="layui-icon">&#xe601;</i></a>');
-                    $(obj).parents("tr").find(".td-status").html('<span class="layui-btn layui-btn-normal layui-btn-mini">已显示</span>');
-                    $(obj).remove();
-                    layer.msg('已显示!',{icon: 6,time:1000});
+                    },
+                    success:function (data) {
+                        //给表格嵌入数值
+                        app.repairOrders=data.data.records;
+                    }
+
                 });
-            }
-            // 编辑
-            function new_edit (title,url,id,w,h) {
-                x_admin_show(title,url,w,h); 
-            }
-            /*删除*/
-            function banner_del(obj,id){
-                layer.confirm('确认要删除吗？',function(index){
-                    //发异步删除数据
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!',{icon:1,time:1000});
+
+            });
+            //模糊查询
+            $("button").click(function(){
+                var name=$("#search").val();
+                $.ajax({
+                    url:"repairOrder/getPage",//调用的接口 模糊查询
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        name:name
+                    },
+                    success:function (data) {
+                        //给表格嵌入数值
+                        app.repairOrders=data.data.records;
+
+                    }
+
                 });
+            })
+            //编辑楼房的状态
+            function edit(obj) {
+                var id=$(obj).parents("tr").children("td").eq(0).text()
+                var status=$(obj).parents("tr").children("td").find("select").val()
+                $.ajax({
+                    url:"repairOrder/editStatus",
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        id:id,
+                        status:status
+                    },
+                    success:function (data) {
+                        layer.msg("修改成功", {icon: 6,time:1500})
+                    }
+                })
             }
             </script>
             <script>

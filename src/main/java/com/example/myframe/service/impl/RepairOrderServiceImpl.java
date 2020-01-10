@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.myframe.dao.RepairOrderDao;
 import com.example.myframe.entity.RepairOrderBean;
 import com.example.myframe.service.RepairOrderService;
+import com.example.myframe.vo.RepairOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,12 @@ public class RepairOrderServiceImpl extends ServiceImpl<RepairOrderDao,RepairOrd
     }
 
     @Override
-    public IPage<RepairOrderBean> getPage(Page<RepairOrderBean> page) {
+    public IPage<RepairOrderVo> getPage(Page page) {
         return repairOrderDao.getPage(page);
+    }
+
+    @Override
+    public void editStatus(RepairOrderBean repairOrderBean) {
+        repairOrderDao.editStatus(repairOrderBean);
     }
 }

@@ -5,8 +5,33 @@
     <select id="getAll" resultType="com.example.myframe.entity.ChargeOrderBean">
 
     </select>
-	<select id="getPage" resultType="com.example.myframe.entity.ChargeOrderBean" parameterType="String">
+    <select id="getPage" resultType="com.example.myframe.vo.ChargeOrderVo">
+        SELECT
+        chargeorder.id as id,
+        chargeorder.title as title,
+        user.name as userName,
+        admin.name as adminName,
+        house.position as housePosition,
+        type.content as type,
+        chargeorder.status as status,
+        chargeorder.money as money,
+        chargeorder.create_date as createDate
+        from chargeorder,admin,house,type,user
+        where chargeorder.user_id=user.id
+        and (chargeorder.admin_id=admin.id
+        and chargeorder.house_id=house.id
+        and chargeorder.type_id=type.id)
+        and (chargeorder.title like concat('%',#{selectStr},'%')
+        or admin.name like concat('%',#{selectStr},'%')
+        or user.name like concat('%',#{selectStr},'%')
+        or house.position like concat('%',#{selectStr},'%')
+        or type.content like concat('%',#{selectStr},'%')
+        or chargeorder.status like concat('%',#{selectStr},'%'))
+        ORDER BY chargeorder.update_date desc
+    </select>
 
-	</select>
+    <update id="editStatus" parameterType="com.example.myframe.entity.ChargeOrderBean">
+        update  chargeorder set status=#{status} where id=#{id}
+    </update>
 </mapper>
 

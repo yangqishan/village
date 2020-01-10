@@ -12,150 +12,80 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">
         <link rel="stylesheet" href="./css/x-admin.css" media="all">
+        <script src="./js/vue.js"  type="text/javascript"></script>
+        <script src="./js/jquery.min.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="x-nav">
             <span class="layui-breadcrumb">
               <a><cite>首页</cite></a>
               <a><cite>订单管理</cite></a>
-              <a><cite>物业缴费订单</cite></a>
+              <a><cite>缴费订单</cite></a>
             </span>
             <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
         </div>
-        <div class="x-body">
-        <form class="layui-form x-center" action="" style="width:500px">
+        <div class="x-body" id="app">
+        <div class="layui-form x-center" style="width:500px">
                 <div class="layui-form-pane">
                   <div class="layui-form-item">
                     <div class="layui-input-inline" style="width:400px">
-                      <input type="text" name="username"  placeholder="搜索内容" autocomplete="off" class="layui-input">
+                      <input type="text" id="search"  placeholder="搜索内容" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline" style="width:80px">
                         <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
                     </div>
                   </div>
                 </div> 
-            </form>
-            <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><button class="layui-btn" onclick="new_add('添加用户','new_add.html','600','500')"><i class="layui-icon">&#xe608;</i>添加</button><span class="x-right" style="line-height:25px">共有数据：88 条</span></xblock>
-            <table class="layui-table">
+            </div>
+            <table class="layui-table" >
                 <thead>
                     <tr>
-                        <th width="5%">
-                            <input type="checkbox" name="" value="">
-                        </th>
                         <th width="5%">序号</th>
-                        <th width="8%">模块</th>
-                        <th width="5%">标题</th>
-                        <th width="8%">图片</th>
-                        <th width="9%">发表时间</th>
-                        <th width="44%">内容</th>
-                        <th width="8%">显示状态</th>
+                        <th width="15%">内容</th>
+                        <th width="8%">管理员</th>
+                        <th width="8%">住户</th>
+                        <th width="8%">房屋位置</th>
+                        <th width="8%">类型</th>
+                        <th width="8%">状态</th>
+                        <th width="8%">金额</th>
+                        <th width="8%">订单时间</th>
                         <th width="9%">操作</th>
                     </tr>
                 </thead>
                 <tbody id="x-img">
-                    <tr>
+                    <tr v-for="chargeOrder of chargeOrders">
+                        <td >{{chargeOrder.id}}</td>
+                        <td>{{chargeOrder.title}}</td>
+                        <td>{{chargeOrder.adminName}}</td>
+                        <td>{{chargeOrder.userName}}</td>
+                        <td>{{chargeOrder.housePosition}}</td>
+                        <td>{{chargeOrder.type}}</td>
                         <td>
-                            <input type="checkbox" value="1" name="">
-                        </td>
-                        <td >1</td>
-                        <td>心健新闻</td>
-                        <td>阳光心健专家应邀宿松县实验中学，开展考前减压讲座</td>
-                        <td align="left">
-                            <img src="images/img1.jpg" alt="" width="56" height="56">
-                        </td>
-                        <td >2017-07-15</td>
-                        <td >2017年5月22日下午，在安庆市宿松县实验中学校会议室，阳光心健心理专家柯博士应宿松实验中学邀请为该校初三年级全体学生开展《考前减压—扬起自信的风帆》课题讲座。各参与班级班主任、学生处等相关部门的老师参加了此次讲座。
-                              讲座过程中，柯博士给大家讲解了良好的心态在考试与生活中的重大作用，着重给同学们介绍了在大考之前，如何调节情绪及正确对待备考焦虑，积极运用自我暗示及自我疏导的心理学方法释放自身压力，建立良好的自信迎接中考的来临。</td>
-                        <td class="td-status">
-                            <span class="layui-btn layui-btn-normal layui-btn-mini">
-                                已显示
-                            </span>
-                        </td>
+                            <select lay-verify="required" id="status" name="cid">
+                                <option value="status">
+                                    {{chargeOrder.status}}
+                                </option>
+                                <optgroup label="状态">
+                                    <option value="未缴费">未缴费</option>
+                                    <option value="已缴费">已缴费</option>
+                                </optgroup>
+                            </select></td>
+                        <td>{{chargeOrder.money}}元</td>
+                        <td>{{chargeOrder.createDate}}</td>
                         <td class="td-manage">
-                            <a style="text-decoration:none" onclick="banner_stop(this,'10001')" href="javascript:;" title="不显示">
-                                <i class="layui-icon">&#xe601;</i>
-                            </a>
-                            <a title="修改" href="javascript:;" onclick="new_edit('修改','new_edit.html','4','','510')"
+                            <a title="修改" href="javascript:;" onclick="edit(this)"
                             class="ml-5" style="text-decoration:none">
                                 <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a title="删除" href="javascript:;" onclick="banner_del(this,'1')" 
-                            style="text-decoration:none">
-                                <i class="layui-icon">&#xe640;</i>
-                            </a>
-                        </td>
-                    </tr>
-                     <tr>
-                        <td>
-                            <input type="checkbox" value="1" name="">
-                        </td>
-                        <td >2</td>
-                        <td>媒体报道</td>
-                        <td>不要被谣“盐”利用</td>
-                        <td align="left">
-                            <img src="images/img1.jpg" alt="" width="56" height="56">
-                        </td>
-                        <td >2017-07-15</td>
-                        <td >几乎是一夜之间，一场食盐抢购风席卷了全国各地，如同地震引发的海啸一般，这场突如其来的抢购让很多人猝不及防。
- 抢购现象最早从浙江和广东等地开始。比如，3月16日下午，绍兴网就图文并茂地报道了当地抢购碘盐的现象。为此，绍兴市政府当晚召开紧急会议，部署应对措施。
-      3月16日傍晚开始，门户网站、论坛和微博上有关抢购的消息开始不断大量地涌出。此时，从浙江、广东到江苏、安徽，甚至到云南、四川，都纷纷出现抢购食盐的现象。3月17日，各地报刊都同时进行了报道，并刊发了当地政府的应对措施和对市民的提醒。
-      据《广州日报》报道，16日，广东多个城市食盐遭抢购，商家还趁机提价，一包盐卖到十多块钱。广东省盐务局则召开紧急会议，表示广东省食盐储备可供三个月以上，能够保证食盐供应。</td>
-                        <td class="td-status">
-                            <span class="layui-btn layui-btn-normal layui-btn-mini">
-                                已显示
-                            </span>
-                        </td>
-                        <td class="td-manage">
-                            <a style="text-decoration:none" onclick="banner_stop(this,'10001')" href="javascript:;" title="不显示">
-                                <i class="layui-icon">&#xe601;</i>
-                            </a>
-                            <a title="修改" href="javascript:;" onclick="new_edit('修改','new_edit.html','4','','510')"
-                            class="ml-5" style="text-decoration:none">
-                                <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a title="删除" href="javascript:;" onclick="banner_del(this,'1')" 
-                            style="text-decoration:none">
-                                <i class="layui-icon">&#xe640;</i>
-                            </a>
-                        </td>
-                    </tr>
-                     <tr>
-                        <td>
-                            <input type="checkbox" value="1" name="">
-                        </td>
-                        <td >3</td>
-                        <td>心理新闻</td>
-                        <td>国家心理咨询师职业资格认证培训持续开班</td>
-                        <td align="left">
-                            <img src="images/img1.jpg" alt="" width="56" height="56">
-                        </td>
-                        <td >2017-07-15</td>
-                        <td >您是不是发现，生活的节奏越来越快呢？
-您是不是发现，周边的生活总是有太多的不和谐呢？
-您是不是发现，家庭婚姻生活总是演绎着不同的悲伤乐章呢？
-您是不是发现，生活的压力、工作的压力、子女的教育压力，来自于生活的方方面面的压力压抑着人们，心理问题也日益增多呢？乐章呢？</td>
-                        <td class="td-status">
-                            <span class="layui-btn layui-btn-normal layui-btn-mini">
-                                已显示
-                            </span>
-                        </td>
-                        <td class="td-manage">
-                            <a style="text-decoration:none" onclick="banner_stop(this,'10001')" href="javascript:;" title="不显示">
-                                <i class="layui-icon">&#xe601;</i>
-                            </a>
-                            <a title="修改" href="javascript:;" onclick="new_edit('修改','new_edit.html','4','','510')"
-                            class="ml-5" style="text-decoration:none">
-                                <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a title="删除" href="javascript:;" onclick="banner_del(this,'1')" 
-                            style="text-decoration:none">
-                                <i class="layui-icon">&#xe640;</i>
                             </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div id="page"></div>
+            <!--分页-->
+            <ul class="pagination">
+                <a href="#" v-on:click="page1" >上一页</a>
+                <a href="#" v-on:click="page2">下一页</a>
+            </ul>
         </div>
             <br /><br /><br />
         <script src="./lib/layui/layui.js" charset="utf-8"></script>
@@ -188,49 +118,107 @@
               
             });
 
-            //批量删除提交
-             function delAll () {
-                layer.confirm('确认要删除吗？',function(index){
-                    //捉到所有被选中的，发异步进行删除
-                    layer.msg('删除成功', {icon: 1});
-                });
-             }
-             /*添加*/
-            function new_add(title,url,w,h){
-                x_admin_show(title,url,w,h);
-            }
-             /*停用*/
-            function banner_stop(obj,id){
-                layer.confirm('确认不显示吗？',function(index){
-                    //发异步把用户状态进行更改
-                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="banner_start(this,id)" href="javascript:;" title="显示"><i class="layui-icon">&#xe62f;</i></a>');
-                    $(obj).parents("tr").find(".td-status").html('<span class="layui-btn layui-btn-disabled layui-btn-mini">不显示</span>');
-                    $(obj).remove();
-                    layer.msg('不显示!',{icon: 5,time:1000});
-                });
-            }
+            //定义一个vue对象
+            var app=new Vue({
+                el:"#app",
+                data:{
+                    pageindex:0,
+                    chargeOrders:[]
+                },
+                methods:{
+                    //分页查询
+                    page1:function () {
+                        var name=$("#search").val();
+                        this.pageindex--;
+                        if(this.pageindex<=0){
+                            this.pageindex=0
+                        }
+                        $.ajax({
+                            url:"chargeOrder/getPage",
+                            type:"post",
+                            dataType:"json",
+                            data:{
+                                name:name,
+                                current:this.pageindex
+                            },
+                            success:function (data) {
+                                //给表格嵌入数值
+                                app.pageindex=data.data.current;
+                                app.chargeOrders=data.data.records;
+                            }
+                        })
+                    },
+                    page2:function () {
+                        var name=$("#search").val();
+                        this.pageindex++;
+                        $.ajax({
+                            url:"chargeOrder/getPage",
+                            type:"post",
+                            dataType:"json",
+                            data:{
+                                name:name,
+                                current:this.pageindex
+                            },
+                            success:function (data) {
+                                //给表格嵌入数值
+                                app.pageindex=data.data.current;
+                                app.chargeOrders=data.data.records;
+                            }
+                        })
+                    }
+                }
+            });
+            //加载页面自动执行
+            $(document).ready(function(){
+                $.ajax({
+                    url:"chargeOrder/getPage",//调用的接口  全局查询
+                    type:"post",
+                    dataType:"json",
+                    data:{
 
-            /*启用*/
-            function banner_start(obj,id){
-                layer.confirm('确认要显示吗？',function(index){
-                    //发异步把用户状态进行更改
-                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="banner_stop(this,id)" href="javascript:;" title="不显示"><i class="layui-icon">&#xe601;</i></a>');
-                    $(obj).parents("tr").find(".td-status").html('<span class="layui-btn layui-btn-normal layui-btn-mini">已显示</span>');
-                    $(obj).remove();
-                    layer.msg('已显示!',{icon: 6,time:1000});
+                    },
+                    success:function (data) {
+                        //给表格嵌入数值
+                        app.chargeOrders=data.data.records;
+                    }
+
                 });
-            }
-            // 编辑
-            function new_edit (title,url,id,w,h) {
-                x_admin_show(title,url,w,h); 
-            }
-            /*删除*/
-            function banner_del(obj,id){
-                layer.confirm('确认要删除吗？',function(index){
-                    //发异步删除数据
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!',{icon:1,time:1000});
+
+            });
+            //模糊查询
+            $("button").click(function(){
+                var name=$("#search").val();
+                $.ajax({
+                    url:"chargeOrder/getPage",//调用的接口 模糊查询
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        name:name
+                    },
+                    success:function (data) {
+                        //给表格嵌入数值
+                        app.chargeOrders=data.data.records;
+
+                    }
+
                 });
+            })
+            //编辑状态
+            function edit(obj) {
+                var id=$(obj).parents("tr").children("td").eq(0).text()
+                var status=$(obj).parents("tr").children("td").find("select").val()
+                $.ajax({
+                    url:"chargeOrder/editStatus",
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        id:id,
+                        status:status
+                    },
+                    success:function (data) {
+                        layer.msg("修改成功", {icon: 6,time:1500})
+                    }
+                })
             }
             </script>
             <script>

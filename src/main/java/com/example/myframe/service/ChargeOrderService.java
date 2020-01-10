@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.myframe.entity.ChargeOrderBean;
+import com.example.myframe.vo.ChargeOrderVo;
 
 import java.util.List;
 
@@ -15,5 +16,6 @@ public interface ChargeOrderService extends IService<ChargeOrderBean>{
      * @param page
      * @return
      */
-    IPage<ChargeOrderBean> getPage(Page<ChargeOrderBean> page);
+    IPage<ChargeOrderVo> getPage(Page page);
+    void editStatus(ChargeOrderBean chargeOrderBean);
 }

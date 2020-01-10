@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.myframe.dao.ChargeOrderDao;
 import com.example.myframe.entity.ChargeOrderBean;
 import com.example.myframe.service.ChargeOrderService;
+import com.example.myframe.vo.ChargeOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,12 @@ public class ChargeOrderServiceImpl extends ServiceImpl<ChargeOrderDao,ChargeOrd
     }
 
     @Override
-    public IPage<ChargeOrderBean> getPage(Page<ChargeOrderBean> page) {
+    public IPage<ChargeOrderVo> getPage(Page page) {
         return chargeOrderDao.getPage(page);
+    }
+
+    @Override
+    public void editStatus(ChargeOrderBean chargeOrderBean) {
+        chargeOrderDao.editStatus(chargeOrderBean);
     }
 }
