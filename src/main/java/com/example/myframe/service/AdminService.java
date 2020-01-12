@@ -17,4 +17,8 @@ public interface AdminService extends IService<AdminBean>{
      * @return
      */
     IPage<AdminBean> getPage(Page<AdminBean> page);
+
+    void addAdmin(AdminBean adminBean);
+
+    void edit(AdminBean adminBean);
 }

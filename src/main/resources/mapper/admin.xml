@@ -5,8 +5,17 @@
     <select id="getAll" resultType="com.example.myframe.entity.AdminBean">
     SELECT * from admin
     </select>
-	<select id="get" resultType="com.example.myframe.entity.AdminBean" parameterType="String">
 
-	</select>
+    <select id="getPage" resultType="com.example.myframe.entity.AdminBean">
+        SELECT * from admin where (name LIKE concat('%',#{selectStr},'%')  or level  like concat('%',#{selectStr},'%'))
+    </select>
+
+    <insert id="addAdmin" parameterType="com.example.myframe.entity.AdminBean">
+        insert into admin(name,password,level,create_date,sex,age) values(#{name},#{password},#{level},now(),#{sex},#{age})
+    </insert>
+
+    <update id="edit" parameterType="com.example.myframe.entity.AdminBean">
+        update admin set level=#{level} where id=#{id}
+    </update>
 </mapper>
 

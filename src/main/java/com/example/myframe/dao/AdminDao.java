@@ -16,6 +16,9 @@ import java.util.List;
 public interface AdminDao extends BaseMapper<AdminBean>{
     List<AdminBean> getAll();
 
-    IPage<AdminBean> get(Page<AdminBean> page);
+    IPage<AdminBean> getPage(Page<AdminBean> page);
 
+    void addAdmin(AdminBean adminBean);
+
+    void edit(AdminBean adminBean);
 }

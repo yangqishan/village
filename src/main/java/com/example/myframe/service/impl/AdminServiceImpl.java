@@ -23,6 +23,16 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao,AdminBean> implements
 
     @Override
     public IPage<AdminBean> getPage(Page<AdminBean> page) {
-        return adminDao.get(page);
+        return adminDao.getPage(page);
+    }
+
+    @Override
+    public void addAdmin(AdminBean adminBean) {
+        adminDao.addAdmin(adminBean);
+    }
+
+    @Override
+    public void edit(AdminBean adminBean) {
+        adminDao.edit(adminBean);
     }
 }
