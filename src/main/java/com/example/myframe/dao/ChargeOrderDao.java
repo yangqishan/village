@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.myframe.entity.CarBean;
 import com.example.myframe.entity.ChargeOrderBean;
 import com.example.myframe.vo.ChargeOrderVo;
+import com.example.myframe.vo.DataVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -19,4 +20,6 @@ public interface ChargeOrderDao extends BaseMapper<ChargeOrderBean> {
     IPage<ChargeOrderVo> getPage(Page page);
 
     void editStatus(ChargeOrderBean chargeOrderBean);
+
+    List<DataVo> getMoney();
 }

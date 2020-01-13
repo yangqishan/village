@@ -33,5 +33,9 @@
     <update id="editStatus" parameterType="com.example.myframe.entity.ChargeOrderBean">
         update  chargeorder set status=#{status} where id=#{id}
     </update>
+
+    <select id="getMoney" resultType="com.example.myframe.vo.DataVo">
+        select type.content as name,count(chargeorder.type_id) as value,sum(chargeorder.money) as money  from chargeorder,type where chargeorder.type_id=type.id GROUP BY chargeorder.type_id
+    </select>
 </mapper>
 

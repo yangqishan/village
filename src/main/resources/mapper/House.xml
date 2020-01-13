@@ -50,5 +50,9 @@
     <update id="updatebyuserId" parameterType="com.example.myframe.entity.HouseBean">
         update house SET status=#{status} where user_id=#{userId}
     </update>
+
+    <select id="getTypeCount" resultType="com.example.myframe.vo.DataVo">
+        select type.content as name ,count(type.content) as value from house,type where house.type_id=type.id and type.memo like '房%' GROUP BY type.content
+    </select>
 </mapper>
 

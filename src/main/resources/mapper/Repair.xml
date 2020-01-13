@@ -42,5 +42,13 @@
     <update id="updateRepair" parameterType="com.example.myframe.entity.RepairBean">
         UPDATE repair set address=#{address},memo=#{memo},update_date=now(),type_id=#{typeId},tel=#{tel} where id=#{id}
     </update>
+
+    <select id="getTypeCount" resultType="com.example.myframe.vo.PersonVo">
+        select type.content as name ,count(*) as value from repair,type where repair.type_id=type.id GROUP BY repair.type_id
+    </select>
+
+    <select id="getSexCount" resultType="com.example.myframe.vo.PersonVo">
+       SELECT sex as name,count(*) as value from repair GROUP BY sex
+    </select>
 </mapper>
 

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.myframe.entity.ChargeOrderBean;
 import com.example.myframe.entity.HouseBean;
 import com.example.myframe.entity.UserBean;
+import com.example.myframe.vo.DataVo;
 import com.example.myframe.vo.HouseVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -27,4 +28,5 @@ public interface HouseDao extends BaseMapper<HouseBean> {
      */
     List<HouseVo> getNullLike(String str);
 
+    List<DataVo> getTypeCount();
 }

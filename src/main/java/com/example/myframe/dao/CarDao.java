@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.myframe.entity.AdminBean;
 import com.example.myframe.entity.CarBean;
 import com.example.myframe.vo.CarVo;
+import com.example.myframe.vo.DataVo;
 import com.example.myframe.vo.HouseVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -23,4 +24,6 @@ public interface CarDao extends BaseMapper<CarBean> {
 
     IPage<CarVo> getLike(Page page);
     void updatebyuserId(CarBean carBean);
+
+    List<DataVo> getTypeCount();
 }

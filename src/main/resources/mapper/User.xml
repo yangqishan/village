@@ -42,5 +42,13 @@
 
     FROM user,house,car,type where (user.id=house.user_id AND user.id=car.user_id AND user.type_id=type.id and user.id=#{id})
     </select>
+
+    <select id="getTypeCount" resultType="com.example.myframe.vo.PersonVo">
+        select type.content as name,count(*) as value from user,type where user.type_id=type.id GROUP BY user.type_id
+    </select>
+
+    <select id="getSexCount" resultType="com.example.myframe.vo.PersonVo">
+       SELECT sex as name,count(*) as value from user GROUP BY sex
+    </select>
 </mapper>
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.myframe.entity.HouseBean;
+import com.example.myframe.vo.DataVo;
 import com.example.myframe.vo.HouseVo;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface HouseService extends IService<HouseBean>{
      * @return
      */
     List<HouseVo> getNullLike(String str);
+
+    List<DataVo> getTypeCount();
 }

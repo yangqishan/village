@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.myframe.dao.RepairOrderDao;
 import com.example.myframe.entity.RepairOrderBean;
 import com.example.myframe.service.RepairOrderService;
+import com.example.myframe.vo.DataVo;
 import com.example.myframe.vo.RepairOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,10 @@ public class RepairOrderServiceImpl extends ServiceImpl<RepairOrderDao,RepairOrd
     @Override
     public void editStatus(RepairOrderBean repairOrderBean) {
         repairOrderDao.editStatus(repairOrderBean);
+    }
+
+    @Override
+    public List<DataVo> getTypeCount() {
+        return repairOrderDao.getTypeCount();
     }
 }

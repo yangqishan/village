@@ -32,5 +32,9 @@
     <update id="editStatus" parameterType="com.example.myframe.entity.RepairOrderBean">
       update  repairorder set status=#{status} where id=#{id}
     </update>
+
+    <select id="getTypeCount" resultType="com.example.myframe.vo.DataVo">
+        select type.content as name,count(repairorder.type_id) as value from repairorder,type where repairorder.type_id=type.id GROUP BY repairorder.type_id
+    </select>
 </mapper>
 

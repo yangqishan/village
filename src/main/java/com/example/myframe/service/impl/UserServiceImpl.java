@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.myframe.dao.UserDao;
-import com.example.myframe.entity.PageBean;
+import com.example.myframe.vo.PersonVo;
 import com.example.myframe.entity.UserBean;
 import com.example.myframe.service.UserService;
 import com.example.myframe.vo.UserVo;
@@ -47,5 +47,15 @@ public class UserServiceImpl extends ServiceImpl<UserDao,UserBean> implements Us
     @Override
     public UserVo getbyid(int id) {
         return userDao.getbyid(id);
+    }
+
+    @Override
+    public List<PersonVo> getTypeCount() {
+        return userDao.getTypeCount();
+    }
+
+    @Override
+    public List<PersonVo> getSexCount() {
+        return userDao.getSexCount();
     }
 }

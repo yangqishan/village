@@ -35,4 +35,14 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao,AdminBean> implements
     public void edit(AdminBean adminBean) {
         adminDao.edit(adminBean);
     }
+
+    @Override
+    public AdminBean getByName(String name) {
+        return adminDao.getByName(name);
+    }
+
+    @Override
+    public void editPwd(AdminBean adminBean) {
+        adminDao.editPwd(adminBean);
+    }
 }

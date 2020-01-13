@@ -9,7 +9,7 @@ import com.example.myframe.entity.UserBean;
 import com.example.myframe.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
-
+import com.example.myframe.vo.PersonVo;
 import java.util.List;
 @Mapper
 @Component
@@ -26,6 +26,18 @@ public interface UserDao extends BaseMapper<UserBean> {
     UserBean getByname(String name);
 
     UserVo getbyid(int id);
+
+    /**
+     * 分组查询类型
+     * @return
+     */
+    List<PersonVo> getTypeCount();
+
+    /**
+     * 分组查询
+     * @return
+     */
+    List<PersonVo> getSexCount();
 }
 
 

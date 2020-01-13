@@ -7,6 +7,7 @@ import com.example.myframe.dao.ChargeOrderDao;
 import com.example.myframe.entity.ChargeOrderBean;
 import com.example.myframe.service.ChargeOrderService;
 import com.example.myframe.vo.ChargeOrderVo;
+import com.example.myframe.vo.DataVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,10 @@ public class ChargeOrderServiceImpl extends ServiceImpl<ChargeOrderDao,ChargeOrd
     @Override
     public void editStatus(ChargeOrderBean chargeOrderBean) {
         chargeOrderDao.editStatus(chargeOrderBean);
+    }
+
+    @Override
+    public List<DataVo> getMoney() {
+        return chargeOrderDao.getMoney();
     }
 }

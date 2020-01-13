@@ -21,4 +21,7 @@ public interface AdminService extends IService<AdminBean>{
     void addAdmin(AdminBean adminBean);
 
     void edit(AdminBean adminBean);
+    AdminBean getByName(String name);
+
+    void editPwd(AdminBean adminBean);
 }

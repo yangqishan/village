@@ -21,4 +21,8 @@ public interface AdminDao extends BaseMapper<AdminBean>{
     void addAdmin(AdminBean adminBean);
 
     void edit(AdminBean adminBean);
+
+    AdminBean getByName(String name);
+
+    void editPwd(AdminBean adminBean);
 }

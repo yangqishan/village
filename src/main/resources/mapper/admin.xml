@@ -17,5 +17,13 @@
     <update id="edit" parameterType="com.example.myframe.entity.AdminBean">
         update admin set level=#{level} where id=#{id}
     </update>
+
+    <select id="getByName" resultType="com.example.myframe.entity.AdminBean" parameterType="String">
+         SELECT * from admin where name=#{name}
+    </select>
+
+    <update id="editPwd" parameterType="com.example.myframe.entity.AdminBean">
+        update admin set password=#{password} where name=#{name}
+    </update>
 </mapper>
 

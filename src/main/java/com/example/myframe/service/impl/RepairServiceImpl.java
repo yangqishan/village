@@ -7,6 +7,7 @@ import com.example.myframe.dao.RepairDao;
 import com.example.myframe.entity.RepairBean;
 import com.example.myframe.service.RepairService;
 import com.example.myframe.vo.RepairVO;
+import com.example.myframe.vo.PersonVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +41,15 @@ public class RepairServiceImpl extends ServiceImpl<RepairDao,RepairBean> impleme
     @Override
     public void updateRepair(RepairBean repairBean) {
         repairDao.updateRepair(repairBean);
+    }
+
+    @Override
+    public List<PersonVo> getTypeCount() {
+        return repairDao.getTypeCount();
+    }
+
+    @Override
+    public List<PersonVo> getSexCount() {
+        return repairDao.getSexCount();
     }
 }

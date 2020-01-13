@@ -7,7 +7,7 @@ import com.example.myframe.entity.RepairBean;
 import com.example.myframe.vo.RepairVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
-
+import com.example.myframe.vo.PersonVo;
 import java.util.List;
 
 @Component
@@ -23,4 +23,16 @@ public interface RepairDao extends BaseMapper<RepairBean> {
     RepairVO getbyid(int id);
     //修改维修工的信息
     void updateRepair(RepairBean repairBean);
+
+    /**
+     * 分组查询类型
+     * @return
+     */
+    List<PersonVo> getTypeCount();
+
+    /**
+     * 分组查询
+     * @return
+     */
+    List<PersonVo> getSexCount();
 }
